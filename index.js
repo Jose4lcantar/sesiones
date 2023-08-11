@@ -1,6 +1,6 @@
 var express = require("express");
 var path=require("path");
-var session=require("express-session");
+var session=require("cookie-session");
 var usuariosRutas=require("./rutas/usuarios");
 require("dotenv").config();
 //actualización de la aplicación
@@ -9,9 +9,8 @@ app.set("view engine", "ejs");
 app.use("/web",express.static(path.join(__dirname,"/web")));
 app.use(express.urlencoded({extended:true}));
 app.use(session({
-    secret: process.env.SECRETO_SESSION,
-    resave:true,
-    saveUninitialized:true
+    name:'session',
+    keys: [process.env.SECRETO_SESSION]
 }));
 app.use("/",usuariosRutas);
 
